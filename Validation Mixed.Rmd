@@ -369,7 +369,4 @@ knitr::kable(as.data.frame(Cald_MainW_n40_r75$Simulation_Result))
 
 ```
 
-```{r echo=FALSE}
-save.image("C:/Users/ac039/Dropbox/Statistics/PowerSims-AC/objects_for_markdown.RData")
-```
 

@@ -143,7 +143,7 @@ knitr::kable(as.data.frame(Cald_MainB_n40_r75$Simulation_Result))
 
 ## Main Effect: Within Subjects 
 
-This simulation is for a main effect within subjects (repeated measures) wherein we are expecting the experimental group is 0.5 SD higher than the control at all time point. In the simulations we will vary the correlation between measures and the sample size. 
+This simulation is for a main effect within subjects (repeated measures) wherein we are expecting both groups to have a 0.1 SD increase at every time point. In the simulations we will vary the correlation between measures and the sample size. 
 
 ```{r, message=FALSE, warning=FALSE}
 #Power for iMain Effect for within subjects factor

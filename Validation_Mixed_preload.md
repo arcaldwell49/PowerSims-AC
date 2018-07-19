@@ -193,9 +193,9 @@ knitr::kable(as.data.frame(Lakens_MainB_n20_r5$main_results))
 
 |            |  power|  effect size|
 |------------|------:|------------:|
-| anova\_a   |  50.98|        0.116|
-| anova\_b   |   4.28|        0.026|
-| anova\_a:b |   4.74|        0.026|
+| anova\_a   |  52.02|        0.117|
+| anova\_b   |   4.18|        0.025|
+| anova\_a:b |   4.36|        0.026|
 
 ``` r
 knitr::kable(as.data.frame(Cald_MainB_n20_r5$Simulation_Result))
@@ -203,7 +203,7 @@ knitr::kable(as.data.frame(Cald_MainB_n20_r5$Simulation_Result))
 
 |  Sample\_Size|  Power\_Main1|  Power\_Main2|  Power\_Inter|  Part\_Eta\_Sq\_Main1|  Part\_Eta\_Sq\_Main2|  Part\_Eta\_Sq\_Inter|
 |-------------:|-------------:|-------------:|-------------:|---------------------:|---------------------:|---------------------:|
-|            20|         51.34|          4.14|          4.36|                 0.116|                 0.025|                 0.026|
+|            20|         50.85|          4.35|          4.68|                 0.115|                 0.026|                 0.026|
 
 ``` r
 #With correlation of 0.75 and sample size of 20
@@ -217,9 +217,9 @@ knitr::kable(as.data.frame(Lakens_MainB_n40_r5$main_results))
 
 |            |  power|  effect size|
 |------------|------:|------------:|
-| anova\_a   |  80.66|        0.104|
-| anova\_b   |   4.98|        0.013|
-| anova\_a:b |   4.02|        0.013|
+| anova\_a   |  81.46|        0.105|
+| anova\_b   |   4.77|        0.013|
+| anova\_a:b |   4.69|        0.013|
 
 ``` r
 knitr::kable(as.data.frame(Cald_MainB_n40_r5$Simulation_Result))
@@ -227,7 +227,7 @@ knitr::kable(as.data.frame(Cald_MainB_n40_r5$Simulation_Result))
 
 |  Sample\_Size|  Power\_Main1|  Power\_Main2|  Power\_Inter|  Part\_Eta\_Sq\_Main1|  Part\_Eta\_Sq\_Main2|  Part\_Eta\_Sq\_Inter|
 |-------------:|-------------:|-------------:|-------------:|---------------------:|---------------------:|---------------------:|
-|            40|         81.16|          4.28|          4.32|                 0.105|                 0.013|                 0.013|
+|            40|         81.16|          4.43|          4.62|                 0.105|                 0.013|                 0.013|
 
 ``` r
 #With correlation of 0.75 and sample size of 40
@@ -239,9 +239,9 @@ knitr::kable(as.data.frame(Lakens_MainB_n40_r75$main_results))
 
 |            |  power|  effect size|
 |------------|------:|------------:|
-| anova\_a   |  70.08|        0.084|
-| anova\_b   |   4.70|        0.013|
-| anova\_a:b |   4.74|        0.013|
+| anova\_a   |  69.59|        0.084|
+| anova\_b   |   4.75|        0.013|
+| anova\_a:b |   4.38|        0.013|
 
 ``` r
 knitr::kable(as.data.frame(Cald_MainB_n40_r75$Simulation_Result))
@@ -249,12 +249,12 @@ knitr::kable(as.data.frame(Cald_MainB_n40_r75$Simulation_Result))
 
 |  Sample\_Size|  Power\_Main1|  Power\_Main2|  Power\_Inter|  Part\_Eta\_Sq\_Main1|  Part\_Eta\_Sq\_Main2|  Part\_Eta\_Sq\_Inter|
 |-------------:|-------------:|-------------:|-------------:|---------------------:|---------------------:|---------------------:|
-|            40|          69.7|          4.86|          4.34|                 0.083|                 0.013|                 0.013|
+|            40|         68.99|          4.61|          4.91|                 0.084|                 0.013|                 0.013|
 
 Main Effect: Within Subjects
 ----------------------------
 
-This simulation is for a main effect within subjects (repeated measures) wherein we are expecting the experimental group is 0.5 SD higher than the control at all time point. In the simulations we will vary the correlation between measures and the sample size.
+This simulation is for a main effect within subjects (repeated measures) wherein we are expecting both groups to have a 0.1 SD increase at every time point. In the simulations we will vary the correlation between measures and the sample size.
 
 ``` r
 #Power for iMain Effect for within subjects factor
@@ -267,8 +267,8 @@ knitr::kable(as.data.frame(Lakens_MainW_n20_r5$main_results))
 
 |            |  power|  effect size|
 |------------|------:|------------:|
-| anova\_a   |   4.98|        0.026|
-| anova\_b   |  99.82|        0.191|
+| anova\_a   |   4.90|        0.025|
+| anova\_b   |  56.48|        0.072|
 | anova\_a:b |   4.30|        0.026|
 
 ``` r
@@ -277,7 +277,7 @@ knitr::kable(as.data.frame(Cald_MainW_n20_r5$Simulation_Result))
 
 |  Sample\_Size|  Power\_Main1|  Power\_Main2|  Power\_Inter|  Part\_Eta\_Sq\_Main1|  Part\_Eta\_Sq\_Main2|  Part\_Eta\_Sq\_Inter|
 |-------------:|-------------:|-------------:|-------------:|---------------------:|---------------------:|---------------------:|
-|            20|          5.16|         99.72|          4.22|                 0.026|                  0.19|                 0.026|
+|            20|          5.09|         56.58|          4.01|                 0.025|                 0.073|                 0.025|
 
 ``` r
 #With correlation of 0.75 and sample size of 20
@@ -286,11 +286,11 @@ knitr::kable(as.data.frame(Cald_MainW_n20_r5$Simulation_Result))
 knitr::kable(as.data.frame(Lakens_MainW_n20_r75$main_results))
 ```
 
-|            |   power|  effect size|
-|------------|-------:|------------:|
-| anova\_a   |    5.00|        0.026|
-| anova\_b   |  100.00|        0.308|
-| anova\_a:b |    4.26|        0.025|
+|            |  power|  effect size|
+|------------|------:|------------:|
+| anova\_a   |   5.08|        0.026|
+| anova\_b   |  89.05|        0.115|
+| anova\_a:b |   4.51|        0.026|
 
 ``` r
 knitr::kable(as.data.frame(Cald_MainW_n20_r75$Simulation_Result))
@@ -298,7 +298,7 @@ knitr::kable(as.data.frame(Cald_MainW_n20_r75$Simulation_Result))
 
 |  Sample\_Size|  Power\_Main1|  Power\_Main2|  Power\_Inter|  Part\_Eta\_Sq\_Main1|  Part\_Eta\_Sq\_Main2|  Part\_Eta\_Sq\_Inter|
 |-------------:|-------------:|-------------:|-------------:|---------------------:|---------------------:|---------------------:|
-|            20|          5.04|           100|          4.46|                 0.026|                 0.308|                 0.026|
+|            20|          4.83|         88.84|          4.36|                 0.026|                 0.115|                 0.026|
 
 ``` r
 #With correlation of 0.5 and sample size of 40
@@ -308,11 +308,11 @@ knitr::kable(as.data.frame(Cald_MainW_n20_r75$Simulation_Result))
 knitr::kable(as.data.frame(Lakens_MainW_n40_r5$main_results))
 ```
 
-|            |   power|  effect size|
-|------------|-------:|------------:|
-| anova\_a   |    5.24|        0.013|
-| anova\_b   |  100.00|        0.178|
-| anova\_a:b |    4.92|        0.013|
+|            |  power|  effect size|
+|------------|------:|------------:|
+| anova\_a   |   5.08|        0.013|
+| anova\_b   |  90.31|        0.060|
+| anova\_a:b |   4.95|        0.013|
 
 ``` r
 knitr::kable(as.data.frame(Cald_MainW_n40_r5$Simulation_Result))
@@ -320,7 +320,7 @@ knitr::kable(as.data.frame(Cald_MainW_n40_r5$Simulation_Result))
 
 |  Sample\_Size|  Power\_Main1|  Power\_Main2|  Power\_Inter|  Part\_Eta\_Sq\_Main1|  Part\_Eta\_Sq\_Main2|  Part\_Eta\_Sq\_Inter|
 |-------------:|-------------:|-------------:|-------------:|---------------------:|---------------------:|---------------------:|
-|            40|          4.82|           100|          4.46|                 0.013|                 0.178|                 0.013|
+|            40|           4.9|         89.95|          4.65|                 0.013|                  0.06|                 0.013|
 
 ``` r
 #With correlation of 0.75 and sample size of 40
@@ -330,11 +330,11 @@ knitr::kable(as.data.frame(Cald_MainW_n40_r5$Simulation_Result))
 knitr::kable(as.data.frame(Lakens_MainW_n40_r75$main_results))
 ```
 
-|            |   power|  effect size|
-|------------|-------:|------------:|
-| anova\_a   |    5.20|        0.013|
-| anova\_b   |  100.00|        0.296|
-| anova\_a:b |    4.68|        0.013|
+|            |  power|  effect size|
+|------------|------:|------------:|
+| anova\_a   |   5.18|        0.013|
+| anova\_b   |  99.76|        0.104|
+| anova\_a:b |   4.74|        0.013|
 
 ``` r
 knitr::kable(as.data.frame(Cald_MainW_n40_r75$Simulation_Result))
@@ -342,4 +342,4 @@ knitr::kable(as.data.frame(Cald_MainW_n40_r75$Simulation_Result))
 
 |  Sample\_Size|  Power\_Main1|  Power\_Main2|  Power\_Inter|  Part\_Eta\_Sq\_Main1|  Part\_Eta\_Sq\_Main2|  Part\_Eta\_Sq\_Inter|
 |-------------:|-------------:|-------------:|-------------:|---------------------:|---------------------:|---------------------:|
-|            40|          4.72|           100|          4.58|                 0.012|                 0.296|                 0.013|
+|            40|          5.11|         99.85|          4.73|                 0.013|                 0.103|                 0.013|
