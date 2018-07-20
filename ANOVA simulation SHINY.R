@@ -11,7 +11,7 @@ ui <- fluidPage(
     sidebarPanel(
       
       textInput(inputId = "design", label = "Design Input",
-                value = "2b*3w"),
+                value = "2b*2w"),
       
       sliderInput("sample_size",
                   label = "Sample Size per Cell",
@@ -38,12 +38,22 @@ ui <- fluidPage(
       
     sliderInput("nsims", 
                 label = "Number of Simulations",
-                min = 100, max = 10000, value = 1000),
+                min = 10, max = 10000, value = 1000),
     submitButton("Submit")
   ),
   
-  mainPanel(  hr(),
-              fluidRow(column(3, verbatimTextOutput("value"))))
+  mainPanel(  #hr(),
+              #fluidRow(column(3, verbatimTextOutput("value")))
+    # Output: Verbatim text for data summary ----
+    #verbatimTextOutput("main")#,
+    dataTableOutput(tableMain),
+    
+    dataTableOutput(tablePC)
+    # Output: Verbatim text for data summary ----
+    #verbatimTextOutput("pc")
+    
+    
+              )
 )
 )
 
@@ -505,10 +515,14 @@ server <- function(input, output) {
                                 r=input$r, 
                                 p_adjust = input$p_adjust)})
   
-  output$summary <- renderPrint({ ANOVA_power(design_result, alpha = input$sig, nsims = input$nsims) })
-    
-    
-    
+  power_result<- reactive({
+    ANOVA_power(design_result, alpha = input$sig, nsims = input$nsims) 
+  })
+  
+  output$tableMain <- renderDataTable(power_result$main_results)
+  
+  output$tablePC <- renderDataTable(power_result$pc_results)
+  
     
 }
 
