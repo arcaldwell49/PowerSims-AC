@@ -525,14 +525,14 @@ server <- function(input, output) {
   #sig <- as.numeric(input$sig)
   #sims <- as.numeric(input$nsims)
   
-  #design_vec <- reactive({as.numeric(unlist(strsplit(input$design, ",")))})
+  #mu_vec <- reactive({as.numeric(unlist(strsplit(input$mu, ",")))})
 
-  design_result <- observeEvent(input$designBut, {ANOVA_design(string = as.numeric(unlist(strsplit(input$design, ","))),
-                                                             n = input$sample_size, 
-                                                             mu = input$mu, 
-                                                             sd = input$sd, 
-                                                             r= input$r, 
-                                                             p_adjust = input$p_adjust)
+  design_result <- observeEvent(input$designBut, {ANOVA_design(string = as.character(input$design),
+                                                             n = as.numeric(input$sample_size), 
+                                                             mu = as.numeric(unlist(strsplit(input$mu, ","))), 
+                                                             sd = as.numeric(input$sd), 
+                                                             r= as.numeric(input$r), 
+                                                             p_adjust = as.character(input$p_adjust))
   })
   
   #design_result <- reactive({ })
