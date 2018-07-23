@@ -24,31 +24,38 @@ ui <- fluidPage(
                   label = "Correlation for Within Subjects Factors",
                   min = 0, max = 1, value = 0.87),
       
-      textInput("mu", h3("Vector of Means"), 
-                value = "c(1.03, 1.21, 0.98, 1.01)"),
+      textInput("mu", label = "Vector of Means", 
+                value = "1.03, 1.21, 0.98, 1.01"),
       
       selectInput("p_adjust", h3("Adjustment method for multiple comparisons"), 
                   choices = list("None" = "none", "Holm-Bonferroni" = "holm",
                                  "Bonferroni" = "bonferroni",
                                  "False Discovery Rate" = "fdr"), selected = 1),
+      
+      actionButton("designBut","Set-Up Design"),
 
       sliderInput("sig",
                   label = "Alpha Level",
                   min = 0, max = 1, value = 0.05),
       
+    
+      
     sliderInput("nsims", 
                 label = "Number of Simulations",
                 min = 10, max = 10000, value = 1000),
-    submitButton("Submit")
+    
+    actionButton("sim", "Simulate!")
   ),
   
   mainPanel(  #hr(),
               #fluidRow(column(3, verbatimTextOutput("value")))
     # Output: Verbatim text for data summary ----
     #verbatimTextOutput("main")#,
-    dataTableOutput(tableMain),
+    plotOutput("design"),
     
-    dataTableOutput(tablePC)
+    tableOutput('tableMain'),
+    
+    tableOutput('tablePC')
     # Output: Verbatim text for data summary ----
     #verbatimTextOutput("pc")
     
@@ -61,6 +68,8 @@ ui <- fluidPage(
 # Define server logic 
 
 server <- function(input, output) {
+  
+  v <- reactiveValues(data = NULL)
   
   ANOVA_design <- function(string, n, mu, sd, r, p_adjust){
     ###############
@@ -506,22 +515,48 @@ server <- function(input, output) {
                    plot1 = plt1))
     
   }
+  
+  #design <- as.character(input$design)
+  #sample_size <- as.numeric(input$sample_size)
+  #means <- as.vector(input$mu)
+  #SD <- as.numeric(input$sd)
+  #correl <- as.numeric(input$r)
+  #p_adjust <- as.character(input$p_adjust)
+  #sig <- as.numeric(input$sig)
+  #sims <- as.numeric(input$nsims)
+  
+  #design_vec <- reactive({as.numeric(unlist(strsplit(input$design, ",")))})
 
-  
-  design_result <- reactive({ ANOVA_design(string = input$design,
-                                n = input$sample_size, 
-                                mu = input$mu, 
-                                sd = input$sd, 
-                                r=input$r, 
-                                p_adjust = input$p_adjust)})
-  
-  power_result<- reactive({
-    ANOVA_power(design_result, alpha = input$sig, nsims = input$nsims) 
+  design_result <- observeEvent(input$designBut, {ANOVA_design(string = as.numeric(unlist(strsplit(input$design, ","))),
+                                                             n = input$sample_size, 
+                                                             mu = input$mu, 
+                                                             sd = input$sd, 
+                                                             r= input$r, 
+                                                             p_adjust = input$p_adjust)
   })
   
-  output$tableMain <- renderDataTable(power_result$main_results)
+  #design_result <- reactive({ })
   
-  output$tablePC <- renderDataTable(power_result$pc_results)
+  output$plot <- renderPlot({
+    if (is.null(v$data)) return()
+    design_result$meansplot})
+  
+  power_result <- observeEvent(input$sim, {ANOVA_power(design_result, 
+                                                       alpha = input$sig, 
+                                                       nsims = input$nsims)
+    
+    
+  })
+  
+  #power_result <- reactive({ })
+  
+  
+  power_main <- as.data.frame(power_result$main_results)
+  power_pc <- as.data.frame(power_result$pc_results)
+  
+  output$tableMain <- renderTable(power_main)
+  
+  output$tablePC <- renderTable(power_pc)
   
     
 }
