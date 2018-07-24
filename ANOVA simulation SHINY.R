@@ -1,5 +1,6 @@
 library(shiny)
 
+
 #Source functions
 
 
@@ -51,7 +52,8 @@ ui <- fluidPage(
               #fluidRow(column(3, verbatimTextOutput("value")))
     # Output: Verbatim text for data summary ----
     #verbatimTextOutput("main")#,
-    plotOutput("design"),
+    #plotOutput('plot'),
+    verbatimTextOutput("DESIGN"),
     
     tableOutput('tableMain'),
     
@@ -527,7 +529,9 @@ server <- function(input, output) {
   
   #mu_vec <- reactive({as.numeric(unlist(strsplit(input$mu, ",")))})
 
-  design_result <- observeEvent(input$designBut, {ANOVA_design(string = as.character(input$design),
+  values <- reactiveValues(design_result=0, power_result=0)
+  
+  observeEvent(input$designBut, { values$design_result <- ANOVA_design(string = as.character(input$design),
                                                              n = as.numeric(input$sample_size), 
                                                              mu = as.numeric(unlist(strsplit(input$mu, ","))), 
                                                              sd = as.numeric(input$sd), 
@@ -537,11 +541,23 @@ server <- function(input, output) {
   
   #design_result <- reactive({ })
   
-  output$plot <- renderPlot({
-    if (is.null(v$data)) return()
-    design_result$meansplot})
+  output$DESIGN <- renderText({
+    req(input$designBut)
+    paste("The design is", values$design_result$string,
+          "[", deparse(values$design_result$frml1), "]",
+          " 
+          ",
+          "Sample size per cell", values$design_result$n)
+ 
+  })
   
-  power_result <- observeEvent(input$sim, {ANOVA_power(design_result, 
+  #output$plot <- renderPlot({
+  #  if (is.null(v$data)) return()
+ #   values$design_result$meansplot})
+  
+  #output$plot <- reactive ({values$design_result$meansplot})
+  
+  power_result <- observeEvent(input$sim, {ANOVA_power(values$design_result, 
                                                        alpha = input$sig, 
                                                        nsims = input$nsims)
     
