@@ -52,8 +52,12 @@ ui <- fluidPage(
               #fluidRow(column(3, verbatimTextOutput("value")))
     # Output: Verbatim text for data summary ----
     #verbatimTextOutput("main")#,
-    #plotOutput('plot'),
+    
     verbatimTextOutput("DESIGN"),
+    
+    plotOutput('plot'),
+    
+    tableOutput("corMat"),
     
     tableOutput('tableMain'),
     
@@ -543,13 +547,32 @@ server <- function(input, output) {
   
   output$DESIGN <- renderText({
     req(input$designBut)
-    paste("The design is", values$design_result$string,
-          "[", deparse(values$design_result$frml1), "]",
+    
+    paste("The design is set as", values$design_result$string, 
+          " 
+          ", 
+          "Model formula: ", deparse(values$design_result$frml1), 
           " 
           ",
-          "Sample size per cell", values$design_result$n)
+          "Sample size per cell n = ", values$design_result$n, 
+          " 
+          ",
+          "Adjustment for multiple comparisons: ", values$design_result$p_adjust)
  
   })
+  
+  output$corMat <- renderTable(colnames = FALSE, 
+                               caption = "Matrix of Standard Deviation and Correlations",
+                               caption.placement = getOption("xtable.caption.placement", "top"),
+                               {
+    req(input$designBut)
+    values$design_result$sigmatrix
+    
+  })
+  
+  output$plot <- renderPlot({
+    req(input$designBut)
+    values$design_result$meansplot})
   
   #output$plot <- renderPlot({
   #  if (is.null(v$data)) return()
@@ -557,7 +580,7 @@ server <- function(input, output) {
   
   #output$plot <- reactive ({values$design_result$meansplot})
   
-  power_result <- observeEvent(input$sim, {ANOVA_power(values$design_result, 
+  observeEvent(input$sim, {values$power_result <-ANOVA_power(values$design_result, 
                                                        alpha = input$sig, 
                                                        nsims = input$nsims)
     
@@ -567,12 +590,18 @@ server <- function(input, output) {
   #power_result <- reactive({ })
   
   
-  power_main <- as.data.frame(power_result$main_results)
-  power_pc <- as.data.frame(power_result$pc_results)
+  #power_main <- as.data.frame(values$power_result$main_results)
+  #power_pc <- as.data.frame(values$power_result$pc_results)
   
-  output$tableMain <- renderTable(power_main)
+  output$tableMain <-  renderTable({
+    req(input$sim)
+    values$power_result$main_results},
+    rownames = TRUE)
   
-  output$tablePC <- renderTable(power_pc)
+  output$tablePC <-  renderTable({
+    req(input$sim)
+    values$power_result$pc_result},
+    rownames = TRUE)
   
     
 }
