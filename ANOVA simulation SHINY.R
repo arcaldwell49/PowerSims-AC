@@ -8,9 +8,9 @@ library(shiny)
 ui <- fluidPage(
   titlePanel("ANOVA Simulation"),
   
-  sidebarLayout(
-    sidebarPanel(
-      
+  #sidebarLayout(
+   # sidebarPanel(
+  column(4, wellPanel(  
       textInput(inputId = "design", label = "Design Input",
                 value = "2b*2w"),
       
@@ -35,40 +35,45 @@ ui <- fluidPage(
       
       actionButton("designBut","Set-Up Design"),
 
-      sliderInput("sig",
-                  label = "Alpha Level",
-                  min = 0, max = 1, value = 0.05),
-      
+
+    conditionalPanel("input.designBut >= 1",
+                     sliderInput("sig",
+                                 label = "Alpha Level",
+                                 min = 0, max = 1, value = 0.05),
+                     sliderInput("nsims", 
+                                 label = "Number of Simulations",
+                                 min = 100, max = 10000, value = 1000),
+                     actionButton("sim", "Simulate!"))
     
-      
-    sliderInput("nsims", 
-                label = "Number of Simulations",
-                min = 10, max = 10000, value = 1000),
+
     
-    actionButton("sim", "Simulate!")
-  ),
+    
+    
+  )),
   
-  mainPanel(  #hr(),
+  column(5,  #hr(),
               #fluidRow(column(3, verbatimTextOutput("value")))
     # Output: Verbatim text for data summary ----
     #verbatimTextOutput("main")#,
+    conditionalPanel("input.designBut >= 1", 
+                     h3("Design for Simulation")),
     
     verbatimTextOutput("DESIGN"),
     
     plotOutput('plot'),
     
-    tableOutput("corMat"),
-    
-    tableOutput('tableMain'),
-    
-    tableOutput('tablePC')
-    # Output: Verbatim text for data summary ----
-    #verbatimTextOutput("pc")
-    
-    
-              )
+    tableOutput("corMat")),
+  
+  column(4, 
+         conditionalPanel("input.sim >= 1", 
+                          h3("Simulation Results")),
+         
+         tableOutput('tableMain'),
+         
+         tableOutput('tablePC') 
+         )
 )
-)
+
 
 
 # Define server logic 
